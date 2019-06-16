@@ -137,10 +137,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp" />
-    <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="code\graphics.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="graphics.h" />
+    <ClInclude Include="code\graphics.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

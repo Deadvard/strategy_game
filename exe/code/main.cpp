@@ -2,6 +2,9 @@
 #include <glad.c>
 #include <stdio.h>
 
+#include "graphics.h"
+#include "../../dll/code/game.h"
+
 struct window
 {
 	SDL_Window* window;
@@ -47,26 +50,37 @@ window create_window(const char* title, int width, int height)
 	return window;
 }
 
-void(*tick)(void);
+typedef void(*tickfunc)(game_memory*, game_input*);
 
 int main(int argc, char** argv)
 {
 	void* game_code = SDL_LoadObject("dll.dll");
 
-	tick = (void(*)(void))SDL_LoadFunction(game_code, "tick");
+	tickfunc tick = (void(*)(game_memory*, game_input*))SDL_LoadFunction(game_code, "tick");
 
 	window window = create_window("game", 1280, 720);
+
+	game_memory memory = {};
+	game_input input = {};
+
+	memory.storage = (unsigned char*)malloc(100);
+	memory.storage_size = 100;
 
 	double last_time = (double)SDL_GetTicks() / 1000.0;
 	double delta_time = 0.0;
 
-	bool running = true;
+	bool running = tick;
 
 	while (running)
 	{
 		double now = (double)SDL_GetTicks() / 1000.0;
 		delta_time = now - last_time;
 		last_time = now;
+
+		input.up.transitions = 0;
+		input.left.transitions = 0;
+		input.down.transitions = 0;
+		input.right.transitions = 0;
 
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
@@ -79,10 +93,39 @@ int main(int argc, char** argv)
 				break;
 			}
 			case SDL_KEYDOWN:
+			case SDL_KEYUP:
 			{
-				if (e.key.keysym.sym == SDLK_ESCAPE)
+				switch (e.key.keysym.sym)
+				{
+				case SDLK_w:
+				{
+					input.up.down = !input.up.down;
+					++input.up.transitions;
+					break; 
+				}
+				case SDLK_a:
+				{
+					input.left.down = !input.left.down;
+					++input.left.transitions;
+					break;
+				}
+				case SDLK_s:
+				{
+					input.down.down = !input.down.down;
+					++input.down.transitions;
+					break;
+				}
+				case SDLK_d:
+				{
+					input.right.down = !input.right.down;
+					++input.right.transitions;				
+					break;
+				}
+				case SDLK_ESCAPE:
 				{
 					running = false;
+					break;
+				}
 				}
 				break;
 			}
@@ -90,7 +133,7 @@ int main(int argc, char** argv)
 		}
 
 		
-		if (tick) tick();
+		tick(&memory, &input);
 
 		glClearColor(135.0f / 255.0f, 206.0f / 255.0f, 235.0f / 255.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
