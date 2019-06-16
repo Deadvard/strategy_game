@@ -1,5 +1,0 @@
-﻿  game.cpp
-  window.cpp
-c:\users\deadvard\source\repos\strategy_game\strategy_game\window.cpp(11): warning C4101: 'b': unreferenced local variable
-  Generating Code...
-  strategy_game.vcxproj -> C:\Users\Deadvard\source\repos\strategy_game\output\x64\Debug\strategy_game.exe
