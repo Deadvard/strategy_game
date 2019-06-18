@@ -60,6 +60,8 @@ int main(int argc, char** argv)
 
 	window window = create_window("game", 1280, 720);
 
+	graphics graphics = {};
+
 	game_memory memory = {};
 	game_input input = {};
 
@@ -95,37 +97,40 @@ int main(int argc, char** argv)
 			case SDL_KEYDOWN:
 			case SDL_KEYUP:
 			{
-				switch (e.key.keysym.sym)
+				if (e.key.repeat == 0)
 				{
-				case SDLK_w:
-				{
-					input.up.down = !input.up.down;
-					++input.up.transitions;
-					break; 
-				}
-				case SDLK_a:
-				{
-					input.left.down = !input.left.down;
-					++input.left.transitions;
-					break;
-				}
-				case SDLK_s:
-				{
-					input.down.down = !input.down.down;
-					++input.down.transitions;
-					break;
-				}
-				case SDLK_d:
-				{
-					input.right.down = !input.right.down;
-					++input.right.transitions;				
-					break;
-				}
-				case SDLK_ESCAPE:
-				{
-					running = false;
-					break;
-				}
+					switch (e.key.keysym.sym)
+					{
+					case SDLK_w:
+					{
+						input.up.down = !input.up.down;
+						++input.up.transitions;
+						break;
+					}
+					case SDLK_a:
+					{
+						input.left.down = !input.left.down;
+						++input.left.transitions;
+						break;
+					}
+					case SDLK_s:
+					{
+						input.down.down = !input.down.down;
+						++input.down.transitions;
+						break;
+					}
+					case SDLK_d:
+					{
+						input.right.down = !input.right.down;
+						++input.right.transitions;
+						break;
+					}
+					case SDLK_ESCAPE:
+					{
+						running = false;
+						break;
+					}
+					}
 				}
 				break;
 			}
@@ -137,6 +142,7 @@ int main(int argc, char** argv)
 
 		glClearColor(135.0f / 255.0f, 206.0f / 255.0f, 235.0f / 255.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		render(&graphics);
 		SDL_GL_SwapWindow(window.window);
 	}
 

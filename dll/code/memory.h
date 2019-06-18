@@ -3,7 +3,7 @@
 
 typedef unsigned char byte;
 
-struct memory_stack
+typedef struct memory_stack
 {
 	byte* bottom;
 	byte* top;

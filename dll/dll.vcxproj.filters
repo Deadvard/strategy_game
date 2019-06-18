@@ -21,12 +21,18 @@
     <ClCompile Include="code\memory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="code\camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="code\memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="code\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

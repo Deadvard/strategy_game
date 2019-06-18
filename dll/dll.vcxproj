@@ -134,10 +134,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="code\camera.cpp" />
     <ClCompile Include="code\game.cpp" />
     <ClCompile Include="code\memory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="code\camera.h" />
     <ClInclude Include="code\game.h" />
     <ClInclude Include="code\memory.h" />
   </ItemGroup>
