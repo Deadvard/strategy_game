@@ -30,3 +30,8 @@ void tick(game_memory* memory, game_input* input)
 	if (input->right.down) camera.position += speed * right;
 	
 }
+
+typedef struct mesh
+{
+
+} mesh;
