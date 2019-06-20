@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <stdio.h>
+
 static const float quad[]
 {
 	0.0f, 0.0f,
@@ -34,6 +36,38 @@ static const float arrow[]
 	0,0,0,0,1,1,1,1,1,1,
 };
 
+typedef struct image
+{
+	int width;
+	int height;
+	int components;
+	unsigned char* data;
+};
+
+void load_textures(const char* path, image** images, int* count)
+{	
+	FILE* f;
+	fopen_s(&f, path, "rb");
+	fread(count, sizeof(int), 1, f);
+
+	*images = (image*)malloc(sizeof(image) * (*count));
+
+	for (int i = 0; i < *count; ++i)
+	{
+		image img = {};
+		fread(&img.width, sizeof(int), 1, f);
+		fread(&img.height, sizeof(int), 1, f);
+		fread(&img.components, sizeof(int), 1, f);
+		unsigned int size = img.width * img.height * img.components;
+		img.data = (unsigned char*)malloc(sizeof(unsigned char) * size);
+		fread(img.data, sizeof(unsigned char), size, f);
+
+		*images[i] = img;
+	}
+
+	fclose(f);
+}
+
 void initialize(renderer* r)
 {
 	r->primitive_shader = createShader("primitive.vert", "primitive.frag");
@@ -54,13 +88,25 @@ void initialize(renderer* r)
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	image* img = 0;
+	int count = 0;
+	load_textures("textures.bin", &img, &count);
+
 	glGenTextures(1, &r->primitive_arrow);
+	glBindTexture(GL_TEXTURE_2D, r->primitive_arrow);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img->width, img->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	/*glGenTextures(1, &r->primitive_arrow);
 	glBindTexture(GL_TEXTURE_2D, r->primitive_arrow);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 10, 10, 0, GL_RED, GL_FLOAT, arrow);	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);*/
 }
 
 void render(renderer* r)
