@@ -3,12 +3,15 @@
 
 #include "memory.h"
 #include "camera.h"
+#include "level.h"
 
 void tick(game_memory* memory, game_input* input)
 {
 	if (!input->up.down && input->up.transitions)
 	{
 		printf("up\n");
+		static Level lvl;
+		loadLevelData(&lvl, "heightmap.bmp");
 	}
 
 	if (input->down.down)
