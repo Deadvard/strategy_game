@@ -2,7 +2,7 @@
 #include <glad.c>
 #include <stdio.h>
 
-#include "graphics.h"
+#include "renderer.h"
 #include "../../dll/code/game.h"
 
 struct window
@@ -60,7 +60,8 @@ int main(int argc, char** argv)
 
 	window window = create_window("game", 1280, 720);
 
-	graphics graphics = {};
+	renderer rend = {};
+	initialize(&rend);
 
 	game_memory memory = {};
 	game_input input = {};
@@ -142,7 +143,7 @@ int main(int argc, char** argv)
 
 		glClearColor(135.0f / 255.0f, 206.0f / 255.0f, 235.0f / 255.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		render(&graphics);
+		render(&rend);
 		SDL_GL_SwapWindow(window.window);
 	}
 

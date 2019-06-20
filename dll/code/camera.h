@@ -2,6 +2,7 @@
 #define CAMERA_H
 
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 typedef struct camera
 {
@@ -14,6 +15,14 @@ typedef struct camera
 } camera;
 
 glm::mat4 update(camera* camera);
+
+
+typedef struct transform
+{
+	glm::vec3 translation;
+	glm::quat rotation;
+	float scale;
+} transform;
 
 
 #endif

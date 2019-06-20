@@ -1,17 +1,15 @@
 #ifndef RENDERER_H
 #define RENDERER_h
 
-typedef struct renderer renderer;
-
-enum render_type
+typedef struct renderer
 {
-	R_PRIMITIVE,
-	R_GUI,
-	R_MESH
-};
+	unsigned int primitive_shader;
+	unsigned int primitive_buffer;
+	unsigned int primitive_index_buffer;
+	unsigned int primitive_vertex_array;
+} renderer;
 
-void begin_render(unsigned int type, renderer* r);
-void end_render();
-
+void initialize(renderer* r);
+void render(renderer* r);
 
 #endif
