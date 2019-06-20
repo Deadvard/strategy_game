@@ -137,12 +137,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp" />
-    <ClCompile Include="code\graphics.cpp" />
     <ClCompile Include="code\renderer.cpp" />
     <ClCompile Include="code\shader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="code\graphics.h" />
     <ClInclude Include="code\primitives.h" />
     <ClInclude Include="code\renderer.h" />
     <ClInclude Include="code\shader.h" />
