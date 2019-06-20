@@ -20,13 +20,18 @@ static const unsigned int quad_indices[]
 
 };
 
-static const unsigned char arrow[]
+static const float arrow[]
 {
-	1,0,0,0,0,
-	0,1,0,0,0,
-	0,0,1,0,1,
-	0,0,0,1,1,
-	0,0,1,1,1
+	1,1,0,0,0,0,0,0,0,0,
+	1,1,1,0,0,0,0,0,0,0,
+	0,1,1,1,0,0,0,0,0,0,
+	0,0,1,1,1,0,0,0,0,0,
+	0,0,0,1,1,1,0,0,0,1,
+	0,0,0,0,1,1,1,0,1,1,
+	0,0,0,0,0,1,1,1,1,1,
+	0,0,0,0,0,0,1,1,1,1,
+	0,0,0,0,0,1,1,1,1,1,
+	0,0,0,0,1,1,1,1,1,1,
 };
 
 void initialize(renderer* r)
@@ -51,7 +56,7 @@ void initialize(renderer* r)
 
 	glGenTextures(1, &r->primitive_arrow);
 	glBindTexture(GL_TEXTURE_2D, r->primitive_arrow);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 5, 5, 0, GL_RED, GL_UNSIGNED_BYTE, arrow);	
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 10, 10, 0, GL_RED, GL_FLOAT, arrow);	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -62,7 +67,7 @@ void render(renderer* r)
 {
 	glUseProgram(r->primitive_shader);
 	uniform(r->primitive_shader, "view_projection", glm::perspective(glm::radians(90.0f), 16.0f / 9.0f, 0.1f, 1000.0f));
-	uniform(r->primitive_shader, "model", glm::translate(glm::mat4(1.0f), glm::vec3(0,0,-3)));
+	uniform(r->primitive_shader, "model", glm::translate(glm::mat4(1.0f), glm::vec3(0,0,-2)));
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, r->primitive_arrow);
