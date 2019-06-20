@@ -7,6 +7,8 @@ typedef struct renderer
 	unsigned int primitive_buffer;
 	unsigned int primitive_index_buffer;
 	unsigned int primitive_vertex_array;
+
+	unsigned int primitive_arrow;
 } renderer;
 
 void initialize(renderer* r);
