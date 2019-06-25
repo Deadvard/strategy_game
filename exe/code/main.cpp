@@ -38,6 +38,7 @@ window create_window(const char* title, int width, int height)
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	SDL_GL_SetSwapInterval(1);
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	window.gl_context = SDL_GL_CreateContext(window.window);
 
