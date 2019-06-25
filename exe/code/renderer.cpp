@@ -114,8 +114,8 @@ void render(game_memory* memory, renderer* r)
 	game_state* state = (game_state*)memory->storage;
 	
 	glUseProgram(r->primitive_shader);
-	uniform(r->primitive_shader, "view_projection", glm::perspective(glm::radians(90.0f), 16.0f / 9.0f, 0.1f, 1000.0f));
-	uniform(r->primitive_shader, "model", state->view);
+	uniform(r->primitive_shader, "view_projection", glm::perspective(glm::radians(90.0f), 16.0f / 9.0f, 0.1f, 1000.0f) * state->view);
+	uniform(r->primitive_shader, "model", glm::translate(glm::mat4(1.0f), glm::vec3(0,0,-2)));
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, r->primitive_arrow);

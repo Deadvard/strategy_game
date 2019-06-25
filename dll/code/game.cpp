@@ -7,6 +7,11 @@
 void tick(game_memory* memory, game_input* input)
 {
 	game_state* state = (game_state*)memory->storage;
+
+	if (!state->is_initialized)
+	{
+		state->camera.position = glm::vec3(0.0f, 0.0f, 1.0f);
+	}
 	
 	if (!input->up.down && input->up.transitions)
 	{

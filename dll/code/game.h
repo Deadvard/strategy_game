@@ -11,6 +11,7 @@ typedef struct game_memory
 
 typedef struct game_state
 {
+	unsigned int is_initialized;
 	camera camera;
 	glm::mat4 view;
 } game_state;
