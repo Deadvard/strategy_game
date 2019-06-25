@@ -66,7 +66,7 @@ int main(int argc, char** argv)
 	game_memory memory = {};
 	game_input input = {};
 
-	memory.storage = (unsigned char*)malloc(100);
+	memory.storage = (unsigned char*)malloc(1000);
 	memory.storage_size = 100;
 	memset(memory.storage, 0, memory.storage_size);
 
