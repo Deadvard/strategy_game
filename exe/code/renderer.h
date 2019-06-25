@@ -1,6 +1,8 @@
 #ifndef RENDERER_H
 #define RENDERER_h
 
+#include "../../dll/code/game.h"
+
 typedef struct renderer
 {
 	unsigned int primitive_shader;
@@ -12,6 +14,6 @@ typedef struct renderer
 } renderer;
 
 void initialize(renderer* r);
-void render(renderer* r);
+void render(game_memory* memory, renderer* r);
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "camera.h"
 
 typedef struct game_memory
 {
@@ -10,7 +11,8 @@ typedef struct game_memory
 
 typedef struct game_state
 {
-
+	camera camera;
+	glm::mat4 view;
 } game_state;
 
 

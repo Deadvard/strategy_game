@@ -62,7 +62,7 @@ void load_textures(const char* path, image** images, int* count)
 		img.data = (unsigned char*)malloc(sizeof(unsigned char) * size);
 		fread(img.data, sizeof(unsigned char), size, f);
 
-		*images[i] = img;
+		(*images)[i] = img;
 	}
 
 	fclose(f);
@@ -109,12 +109,14 @@ void initialize(renderer* r)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);*/
 }
 
-void render(renderer* r)
+void render(game_memory* memory, renderer* r)
 {
+	game_state* state = (game_state*)memory->storage;
+	
 	glUseProgram(r->primitive_shader);
 	uniform(r->primitive_shader, "view_projection", glm::perspective(glm::radians(90.0f), 16.0f / 9.0f, 0.1f, 1000.0f));
-	uniform(r->primitive_shader, "model", glm::translate(glm::mat4(1.0f), glm::vec3(0,0,-2)));
-	
+	uniform(r->primitive_shader, "model", state->view);
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, r->primitive_arrow);
 	
