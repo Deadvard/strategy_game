@@ -10,8 +10,6 @@ void tick(game_memory* memory, game_input* input)
 	if (!input->up.down && input->up.transitions)
 	{
 		printf("up\n");
-		static Level lvl;
-		loadLevelData(&lvl, "heightmap.bmp");
 	}
 
 	if (input->down.down)
@@ -19,7 +17,7 @@ void tick(game_memory* memory, game_input* input)
 		printf("down\n");
 	}
 
-	camera camera;
+	static camera camera;
 	glm::mat4 mat = update(&camera);
 	glm::vec3 forward = glm::vec3(mat[0][2], mat[1][2], mat[2][2]);
 	glm::vec3 right = glm::vec3(mat[0][0], mat[1][0], mat[2][0]);

@@ -2,25 +2,34 @@
 #include <stdio.h>
 #include <memory>
 
-void loadLevelData(Level* level, const char * path)
+typedef struct image
 {
-	level->levelData = new int[256 * 256];
-	memset(level->levelData, 0, sizeof(int) * 256 * 256);
+	int width;
+	int height;
+	int components;
+	unsigned char* data;
+};
+
+void load_textures(const char* path, image** images, int* count)
+{
 	FILE* f;
 	fopen_s(&f, path, "rb");
+	fread(count, sizeof(int), 1, f);
 
-	int number = 0;
-	int index = 0;
+	*images = (image*)malloc(sizeof(image) * (*count));
 
-	while (fscanf_s(f, "%d", &number) != EOF)
+	for (int i = 0; i < *count; ++i)
 	{
-		level->levelData[index++] = number;
+		image img = {};
+		fread(&img.width, sizeof(int), 1, f);
+		fread(&img.height, sizeof(int), 1, f);
+		fread(&img.components, sizeof(int), 1, f);
+		unsigned int size = img.width * img.height * img.components;
+		img.data = (unsigned char*)malloc(sizeof(unsigned char) * size);
+		fread(img.data, sizeof(unsigned char), size, f);
+
+		*images[i] = img;
 	}
 
 	fclose(f);
-
-	for (int i = 0; i < 256 * 256; ++i)
-	{
-		if(level->levelData[i] != 0) printf("%d", level->levelData[i]);
-	}
 }
