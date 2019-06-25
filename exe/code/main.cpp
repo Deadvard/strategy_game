@@ -85,6 +85,8 @@ int main(int argc, char** argv)
 		input.left.transitions = 0;
 		input.down.transitions = 0;
 		input.right.transitions = 0;
+		input.mouse_x = 0;
+		input.mouse_y = 0;
 
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
@@ -134,6 +136,12 @@ int main(int argc, char** argv)
 					}
 					}
 				}
+				break;
+			}
+			case SDL_MOUSEMOTION:
+			{			
+				input.mouse_x = e.motion.xrel;
+				input.mouse_y = e.motion.yrel;
 				break;
 			}
 			}

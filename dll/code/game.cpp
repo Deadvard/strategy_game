@@ -4,6 +4,8 @@
 #include "memory.h"
 #include "level.h"
 
+#define pi32 3.14159265359f
+
 void tick(game_memory* memory, game_input* input)
 {
 	game_state* state = (game_state*)memory->storage;
@@ -12,6 +14,8 @@ void tick(game_memory* memory, game_input* input)
 	{
 		state->is_initialized = true;
 		state->camera.position = glm::vec3(0.0f, 0.0f, 1.0f);
+		state->camera.pitch = 45.0f * pi32;
+		state->camera.yaw = 90.0f * pi32;
 	}
 	
 	if (!input->up.down && input->up.transitions)
@@ -23,6 +27,9 @@ void tick(game_memory* memory, game_input* input)
 	{
 		printf("down\n");
 	}
+
+	state->camera.cursor.x = input->mouse_x;
+	state->camera.cursor.y = input->mouse_y;
 
 	glm::mat4 mat = update(&state->camera);
 	glm::vec3 forward = glm::vec3(mat[0][2], mat[1][2], mat[2][2]);
