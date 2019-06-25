@@ -68,6 +68,7 @@ int main(int argc, char** argv)
 
 	memory.storage = (unsigned char*)malloc(100);
 	memory.storage_size = 100;
+	memset(memory.storage, 0, memory.storage_size);
 
 	double last_time = (double)SDL_GetTicks() / 1000.0;
 	double delta_time = 0.0;

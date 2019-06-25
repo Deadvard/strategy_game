@@ -10,6 +10,7 @@ void tick(game_memory* memory, game_input* input)
 
 	if (!state->is_initialized)
 	{
+		state->is_initialized = true;
 		state->camera.position = glm::vec3(0.0f, 0.0f, 1.0f);
 	}
 	
