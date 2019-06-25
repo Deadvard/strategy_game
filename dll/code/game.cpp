@@ -14,8 +14,6 @@ void tick(game_memory* memory, game_input* input)
 	{
 		state->is_initialized = true;
 		state->camera.position = glm::vec3(0.0f, 0.0f, 1.0f);
-		state->camera.pitch = 45.0f * pi32;
-		state->camera.yaw = 90.0f * pi32;
 	}
 	
 	if (!input->up.down && input->up.transitions)
@@ -35,7 +33,7 @@ void tick(game_memory* memory, game_input* input)
 	glm::vec3 forward = glm::vec3(mat[0][2], mat[1][2], mat[2][2]);
 	glm::vec3 right = glm::vec3(mat[0][0], mat[1][0], mat[2][0]);
 
-	float speed = 1000.0f * (float)input->delta_time;
+	float speed = 10.0f * (float)input->delta_time;
 	if (input->up.down) state->camera.position -= speed * forward;
 	if (input->left.down) state->camera.position -= speed * right;
 	if (input->down.down) state->camera.position += speed * forward;

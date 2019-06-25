@@ -148,6 +148,7 @@ int main(int argc, char** argv)
 			}
 		}
 
+		input.delta_time = delta_time;
 		
 		tick(&memory, &input);
 
