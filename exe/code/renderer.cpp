@@ -44,6 +44,16 @@ typedef struct image
 	unsigned char* data;
 };
 
+typedef struct character
+{
+	int advance;
+	int width;
+	int height;
+	int xoffset;
+	int yoffset;
+	unsigned char bitmap[32 * 32];
+} character;
+
 void load_textures(const char* path, image** images, int* count)
 {	
 	FILE* f;
@@ -92,13 +102,29 @@ void initialize(renderer* r)
 	int count = 0;
 	load_textures("textures.bin", &img, &count);
 
+	FILE* f;
+	fopen_s(&f, "font.bin", "rb");
+
+	character characters[128] = {};
+	fread(&characters, sizeof(character), 128, f);
+
+	character ch = characters['E'];
+
 	glGenTextures(1, &r->primitive_arrow);
+	glBindTexture(GL_TEXTURE_2D, r->primitive_arrow);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, ch.width, ch.height, 0, GL_RED, GL_UNSIGNED_BYTE, ch.bitmap);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	/*glGenTextures(1, &r->primitive_arrow);
 	glBindTexture(GL_TEXTURE_2D, r->primitive_arrow);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img->width, img->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, img->data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);*/
 
 	/*glGenTextures(1, &r->primitive_arrow);
 	glBindTexture(GL_TEXTURE_2D, r->primitive_arrow);
